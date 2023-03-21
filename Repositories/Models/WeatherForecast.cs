@@ -1,4 +1,6 @@
-namespace Repositories.Models
+/*
+  
+ namespace Repositories.Models
 {
     public class WeatherForecast
     {
@@ -11,3 +13,5 @@ namespace Repositories.Models
         public string? Summary { get; set; }
     }
 }
+
+*/

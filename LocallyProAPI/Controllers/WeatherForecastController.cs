@@ -3,6 +3,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Identity.Web.Resource;
 using Repositories.Models;
 
+
+
+/*
 namespace LocallyProAPI.Controllers
 {
     [Authorize]
@@ -36,3 +39,7 @@ namespace LocallyProAPI.Controllers
         }
     }
 }
+
+
+
+*/
