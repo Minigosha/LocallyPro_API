@@ -4,13 +4,17 @@ using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using Microsoft.Identity.Web.Resource;
 using Repositories.Context;
 using Repositories.Models;
 using System;
+using Microsoft.AspNetCore.JsonPatch;
+
 
 namespace LocallyProAPI.Controllers
 {
+    
     //[Authorize]
     [Route("api/[controller]")]
     //[Authorize]
@@ -34,6 +38,28 @@ namespace LocallyProAPI.Controllers
             //ApplicationUser user = await _userManager.GetUserAsync(User);
             return await _context.Event.ToListAsync();
         }
+
+        [HttpGet("{id:int}")]
+        // GET: Events/Edit/5
+        public async Task<IActionResult> Get(int? id)
+        {
+
+
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var @event = await _context.Event.FindAsync(id);
+
+            if (@event == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(@event);
+
+        }
         /*
         [Route("[action]/city={City}&address={Address}&dateTimeStart={DateTimeStart}&dateTimeEnd={DateTimeEnd}")]
         [HttpPost]
@@ -49,6 +75,8 @@ namespace LocallyProAPI.Controllers
             return null;
         }
         */
+
+
         [HttpPost]
         public async Task<ActionResult<Event>> Add(Event @event)
         {
@@ -84,6 +112,90 @@ namespace LocallyProAPI.Controllers
                     "Error deleting data");
             }
         }
+
+        [HttpPatch("{id:int}")]
+        // GET: Events/Edit/5
+        public async Task<ActionResult<Event>> Patch(int? id, [FromBody] Event @event)
+        {
+          
+
+            if (id == null || _context.Event == null)
+            {
+                return NotFound();
+            }
+
+             
+
+            if (@event == null)
+            {
+                return NotFound();
+            }
+            //return Ok(@event);
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _context.Update(@event);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!EventExists(@event.Id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                
+            }
+            return @event;
+
+        }
+
+
+        // POST: Event/Edit/5
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+       /* [HttpPatch("{id:int}")]
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+
+        
+        public async Task<IActionResult> Patch(int id, [Bind("Id, City, Address, DateTimeStart, DateTimeEnd")] Event @event)
+        {
+            if (id != @event.Id)
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _context.Update(@event);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!EventExists(@event.Id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return RedirectToAction(nameof(Index));
+            }
+            return (IActionResult)@event;
+        }
+
+
         /*
         // GET: Events/Delete/
         [HttpDelete("{id:int}")]
@@ -103,5 +215,10 @@ namespace LocallyProAPI.Controllers
 
             return View(@event);
         }*/
+
+        private bool EventExists(int id)
+        {
+            return _context.Producer.Any(e => e.Id == id);
+        }
     }
 }

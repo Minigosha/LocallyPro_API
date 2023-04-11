@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Repositories.Context;
 
@@ -11,9 +12,11 @@ using Repositories.Context;
 namespace Repositories.Migrations
 {
     [DbContext(typeof(ApplicationDBContext))]
-    partial class ApplicationDBContextModelSnapshot : ModelSnapshot
+    [Migration("20230403101142_updateded_producer")]
+    partial class updateded_producer
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -249,15 +252,17 @@ namespace Repositories.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Address")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("City")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime?>("DateTimeEnd")
+                    b.Property<DateTime>("DateTimeEnd")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime?>("DateTimeStart")
+                    b.Property<DateTime>("DateTimeStart")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
@@ -286,7 +291,6 @@ namespace Repositories.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -303,18 +307,21 @@ namespace Repositories.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("ImageName")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("Price")
+                    b.Property<int>("Price")
                         .HasColumnType("int");
 
-                    b.Property<int?>("ProducerId")
+                    b.Property<int>("ProducerId")
                         .HasColumnType("int");
 
                     b.Property<string>("Quantity")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -401,9 +408,13 @@ namespace Repositories.Migrations
 
             modelBuilder.Entity("Repositories.Models.Product", b =>
                 {
-                    b.HasOne("Repositories.Models.Producer", null)
+                    b.HasOne("Repositories.Models.Producer", "Producer")
                         .WithMany("Products")
-                        .HasForeignKey("ProducerId");
+                        .HasForeignKey("ProducerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Producer");
                 });
 
             modelBuilder.Entity("Repositories.Models.Producer", b =>

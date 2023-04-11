@@ -7,6 +7,7 @@ using Repositories.Context;
 using Repositories.Models;
 using System.Configuration;
 using System.Text;
+using Microsoft.AspNetCore.JsonPatch;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Logging.ClearProviders();
@@ -81,7 +82,8 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 .AddDistributedTokenCaches();
 */
 
-builder.Services.AddControllers();
+builder.Services.AddControllers()
+   .AddNewtonsoftJson();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
