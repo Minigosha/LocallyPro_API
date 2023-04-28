@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.33502.453
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LocallyProAPI", "LocallyProAPI\LocallyProAPI.csproj", "{D0F0EFD4-B02C-4735-9C8A-284723CDACDC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LocallyProAPI", "LocallyProAPI\LocallyProAPI.csproj", "{D0F0EFD4-B02C-4735-9C8A-284723CDACDC}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{8462D79B-F9E8-49E3-BE86-4DA1FC512617}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Repositories", "Repositories\Repositories.csproj", "{27BDE574-2C0B-488F-A871-A4625308D1D9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Repositories", "Repositories\Repositories.csproj", "{27BDE574-2C0B-488F-A871-A4625308D1D9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

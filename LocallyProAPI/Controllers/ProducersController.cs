@@ -15,12 +15,15 @@ namespace LocallyProAPI.Controllers
     public class ProducersController : ControllerBase
     {
         private readonly ApplicationDBContext _context;
-       // private readonly UserManager<ApplicationUser> _userManager;
+        //private readonly IBufferedFileUploadService _bufferedFileUploadService;
 
-        public ProducersController(ApplicationDBContext context/*, UserManager<ApplicationUser> userManager*/)
+        // private readonly UserManager<ApplicationUser> _userManager;
+
+        public ProducersController(ApplicationDBContext context /*IBufferedFileUploadService bufferedFileUploadService/*, UserManager<ApplicationUser> userManager*/)
         {
             _context = context;
-          //  _userManager = userManager;
+            //  _userManager = userManager;
+            //_bufferedFileUploadService = bufferedFileUploadService;
         }
 
 
@@ -62,6 +65,46 @@ namespace LocallyProAPI.Controllers
                         
             return Ok(@producer);
         }
+        /*
+        public async Task<IActionResult> Create(IFormFile file)
+        {
+            try
+            {
+                if (await _bufferedFileUploadService.UploadFile(file))
+                {
+                    ViewBag.Message = "File Upload Successful";
+                }
+                else
+                {
+                    ViewBag.Message = "File Upload Failed";
+                }
+            }
+            catch (Exception ex)
+            {
+                //Log ex
+                ViewBag.Message = "File Upload Failed";
+            }
+
+
+            product.Producer = (await _userManager.GetUserAsync(User)).Producer;
+            //_context.Producer.Single(p => p.Id == 1);
+
+            product.ImageName = file.FileName;
+            ModelState.Clear();
+            TryValidateModel(product);
+            if (ModelState.IsValid)
+            {
+
+                _context.Add(product);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            return View(product);
+        }
+
+        */
+
+
 
         [HttpDelete("{id:int}")]
         public async Task<ActionResult<Producer>> DeleteProducer(int id)
@@ -83,8 +126,7 @@ namespace LocallyProAPI.Controllers
             }
             catch (Exception)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError,
-                    "Error deleting data");
+                return StatusCode(StatusCodes.Status500InternalServerError, "Error deleting data");
             }
         }
 

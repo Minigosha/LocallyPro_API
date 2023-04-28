@@ -31,6 +31,7 @@ namespace LocallyProAPI.Controllers
             _userManager = userManager;
         }
 
+        [Authorize(Policy = "AuthZPolicy")]
         [HttpGet("")]
         public async Task<IEnumerable<Event>> Index()
         {
@@ -78,6 +79,7 @@ namespace LocallyProAPI.Controllers
 
 
         [HttpPost]
+        [Authorize]
         public async Task<ActionResult<Event>> Add(Event @event)
         {
             _context.Event.Add(@event);

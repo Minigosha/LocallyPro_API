@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,7 +16,7 @@ namespace Repositories.Models
         public string? ImageName { get; set; }
         //public virtual Producer? Producer { get; set; }
        
-        
+
         public Product()
         {
 
