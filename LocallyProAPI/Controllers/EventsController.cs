@@ -31,7 +31,7 @@ namespace LocallyProAPI.Controllers
             _userManager = userManager;
         }
 
-        [Authorize(Policy = "AuthZPolicy")]
+        //[Authorize(Policy = "AuthZPolicy")]
         [HttpGet("")]
         public async Task<IEnumerable<Event>> Index()
         {
